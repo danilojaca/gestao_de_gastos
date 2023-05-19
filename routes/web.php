@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('gestao.index');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('/gestao', 'App\Http\Controllers\GestaoGastoController');
+//Route::put('/edit/{?}', 'App\Http\Controllers\GestaoGastoController@update')->name('update');
+//Route::delete('/delete/{?}', 'App\Http\Controllers\GestaoGastoController@destroy')->name('destroy');
