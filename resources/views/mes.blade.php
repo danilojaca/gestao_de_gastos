@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container m-5 p-0">
+<div class="container p-4 align-items-center justify-content-center">
             <div class="col-md-12">
                 <div class="row g-2">
                     <div class="col-md-4">                                 
@@ -45,11 +45,12 @@
                 </div> 
             </div> 
             <hr>
-            <div class="container mt- justify-content-center" >                                
-                <table class="table table-bordered">
+            <div class="row justify-content-center " >                                
+                <table class="table table-bordered table-responsive  ">
                 <tr>
                     <th>{{'Spending'}}</th>
-                    <th colspan="2">{{'Values'}}</th>
+                    <th>{{'Values'}}</th>
+                    <th>{{'Paid'}}</th>
                     <th>{{'Salary'}}</th>
                     <td>{{$salarios}}</td>
                 </tr>            
@@ -86,7 +87,7 @@
                     <th>{{'Remaining'}}</th>
                     <td class="bg-danger">{{$restante}}</td> 
                     @else                    
-                    <td> <!--adicionar Economias-->
+                    <td class="justify-content-center" > <!--adicionar Economias-->
                     <form  action="{{route('gestao.store')}}" method="POST">
                     @csrf 
                     <input type="hidden" class="form-control " name="mes_id" value="{{$input_mes}}">
