@@ -33,18 +33,30 @@ class GestaoGastoController extends Controller
 
         $gastos = $gestaogastos->where([
             ['mes_id', $request->input('mes')]
-        ])->get();
+        ])->get();        
         
         if (isset($meses)) { 
            $valores = $gastos->toArray();
            $valor = array_column($valores,'valores');
            $soma = array_sum($valor); 
 
-           $restante = ($salarios - $soma);
+           $r = $gestaogastos->where([            
+            ['pago','1'],
+            ['mes_id', $request->input('mes')]
+        ])->get();
+           
+        
+            $s = $r->toArray();
+            $a = array_column($s,'valores');
+            $resto = array_sum($a);
+
+           
+
+           $restante = ($salarios - $resto);
            $input_mes= $request->input('mes');
     }
 
-        return view('mes',['gastos' => $gastos,'mes' => $mes,'soma' => $soma,'salarios' => $salarios, 'restante' => $restante, 'economia' => $economia,'input_mes' => $input_mes,'gestaogastos' => $gestaogastos]);
+        return view('mes',[ 'gastos' => $gastos,'mes' => $mes,'soma' => $soma,'salarios' => $salarios, 'restante' => $restante, 'economia' => $economia,'input_mes' => $input_mes,'gestaogastos' => $gestaogastos]);
     }
 
     /**
@@ -63,15 +75,13 @@ class GestaoGastoController extends Controller
         $gastos = $request->input('gastos');
         $salario = $request->input('salario');
         $saved = $request->input('economia'); 
-        if(isset( $gastos)){
-       GestaoGasto::create($request->all());
-    }
+        
     if(isset($salario)){
         //dd($request->all());
         Salario::create($request->all());
     }
     
-    if (isset($saved)) {
+    elseif (isset($saved)) {
         $rules = [
             'mes_id' => 'unique:economias',
         ];
@@ -82,6 +92,8 @@ class GestaoGastoController extends Controller
         $request->validate($rules,$feedback);
 
         Economia::create($request->all());
+    }else {
+        GestaoGasto::create($request->all());
     }
         
         return redirect()->back();

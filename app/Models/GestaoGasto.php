@@ -16,6 +16,9 @@ class GestaoGasto extends Model
         'pago',
         
     ];
-    
+    public function Mes(){
+
+        return $this->belongsTo('App\Models\Mes');
+     }
     
 }
