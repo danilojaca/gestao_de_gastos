@@ -18,45 +18,65 @@ class GestaoGastoController extends Controller
         $restante = "0";
         $economia = "0";
         $input_mes= "";
+
         $economias = Economia::all(['economia'])->toArray();  
         $e = array_column($economias,'economia'); 
-        $economia = array_sum($e);        
-
+        $economia = array_sum($e); 
 
         $meses = $request->input('mes');
         $mes = Mes::orderBy('id')->get();
+
         $salario = Salario::where([['mes_id', $request->input('mes')]])->get();
         $y = $salario->toArray();
         $x = array_column($y,'salario');
-        $salarios = array_sum($x); 
-
+        $salarios = array_sum($x);
 
         $gastos = $gestaogastos->where([
             ['mes_id', $request->input('mes')]
-        ])->get();        
-        
-        if (isset($meses)) { 
-           $valores = $gastos->toArray();
-           $valor = array_column($valores,'valores');
-           $soma = array_sum($valor); 
+        ])->get();
 
-           $r = $gestaogastos->where([            
+        if (isset($meses)) { 
+        $valores = $gastos->toArray();
+        $valor = array_column($valores,'valores');
+        $soma = array_sum($valor); 
+
+        $r = $gestaogastos->where([            
             ['pago','1'],
             ['mes_id', $request->input('mes')]
         ])->get();
+        
+        $s = $r->toArray();
+        $a = array_column($s,'valores');
+        $resto = array_sum($a);
+
+        $restante = ($salarios - $resto);
+        $input_mes= $request->input('mes');
+    }
+        // Avisos
+        $date = date('m');
+        if (date('m') < '10') {
+        $data = $date[1];
+        }else {
+        $data = $date;
+        }
+
+        $avisos = $gestaogastos->where([
+            ['mes_id',$data]
+        ])->get();
+
+        $d = $gestaogastos->where([            
+            ['pago',NULL],
+            ['mes_id', $data]
+        ])->get();
            
         
-            $s = $r->toArray();
-            $a = array_column($s,'valores');
-            $resto = array_sum($a);
+            $n = $d->toArray();
+            $i = array_column($n,'valores');
+            $rest = array_sum($i);
 
-           
+    
 
-           $restante = ($salarios - $resto);
-           $input_mes= $request->input('mes');
-    }
-
-        return view('mes',[ 'gastos' => $gastos,'mes' => $mes,'soma' => $soma,'salarios' => $salarios, 'restante' => $restante, 'economia' => $economia,'input_mes' => $input_mes,'gestaogastos' => $gestaogastos]);
+        return view('mes',['rest' => $rest,'avisos' => $avisos,'gastos' => $gastos,'mes' => $mes,'soma' => $soma,'salarios' => $salarios, 'restante' => $restante, 'economia' => $economia,'input_mes' => $input_mes,'gestaogastos' => $gestaogastos]);
     }
 
     /**

@@ -41,7 +41,7 @@ class HomeController extends Controller
             $s = $r->toArray();
             $a = array_column($s,'valores');
             $resto = array_sum($a);
-
+            
 
         return view('home',[ 'avisos' => $avisos,'economia' => $economia,'resto' => $resto]);
     }

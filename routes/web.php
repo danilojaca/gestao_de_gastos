@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/', 'App\Http\Controllers\HomeController');
+Route::get('/', function () {
+    return redirect()->route('gestao.index');
+});
 
 Auth::routes();
 
