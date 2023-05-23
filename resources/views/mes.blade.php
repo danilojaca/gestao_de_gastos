@@ -57,7 +57,7 @@
         <div class="col-sm-8">
             <div class="col-md-12">
                 <div class="row g-2">
-                    <div class="col-md-4">                                 
+                    <div class="col-md-3">                                 
                             <form method="GET" action="{{ route('gestao.index') }}">
                             <select class="form-select" name="mes" >
                             <option data-default disabled selected >Select the Month</option>
@@ -71,7 +71,7 @@
                             <a href='{{ route('gestao.index') }}' class="btn btn-primary">Clear</a>                                                        
                         </div>    
                            </form>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                            
                            </div>
                            <!--adicionar Gastos-->
