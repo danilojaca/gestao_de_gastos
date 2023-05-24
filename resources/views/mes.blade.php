@@ -29,13 +29,13 @@
                             @endif
                         </div>
                         <div class="col-md-12">
-                        <span class="text-dark"><strong>{{'Annual Earnings: €'}}</strong> {{$salary}}</span>
+                        <span class="text-success"><strong>{{'Annual Earnings: €'}}</strong> {{$salary}}</span>
                         </div>
                         <div class="col-md-12">
                         <span class="text-dark"><strong>{{'Percentage of Expenses: €'}}</strong> {{$porcent}} %</span>
                         </div>
                         <div class="col-md-12">
-                        <span class="text-dark"><strong>{{'Annual Spending : €'}}</strong> {{$anual}}</span>
+                        <span class="text-danger"><strong>{{'Annual Spending : €'}}</strong> {{$anual}}</span>
                         </div>                                                
                     </div>
                 </div>  
@@ -63,7 +63,9 @@
                     </div>
                 </div>
             </div>
-        <div class="col-sm-8">
+            <div class="col-sm-1">
+            </div>
+        <div class="col-sm-6">
             <div class="col-md-12">
                 <div class="row g-2">
                     <div class="col-md-3">                                 
@@ -75,16 +77,14 @@
                             @endforeach
                             </select>                                    
                         </div>                   
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <button type="submit" class="btn btn-primary mt-">Submit</button>
                             <a href='{{ route('gestao.index') }}' class="btn btn-primary">Clear</a>                                                        
                         </div>    
                            </form>
-                        <div class="col-md-3">
-                           
-                           </div>
+                        
                            <!--adicionar Gastos-->
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                          @if ($input_mes != '')
                             <form  action="{{route('gestao.store')}}" method="POST">
                             @csrf                    
@@ -171,7 +171,7 @@
                 </table> 
             </div>
         </div>    
-        </div>   
+        </div>         
     </div>        
 </div>
 
