@@ -12,7 +12,7 @@
                             @else 
                                 <span class="text-success">
                             @endif 
-                                    <strong >{{'Total Saved'}}</strong>: € {{$economia}}</span>
+                                    <strong >{{'Total Saved : €'}}</strong> {{$economia}}</span>
                         </div> 
                         <div class="col-md-2">
                         </div>                        
@@ -28,6 +28,15 @@
                                 € {{$economia - '8000'}} <strong>{{'Passed of the goal'}}</strong></span>
                             @endif
                         </div>
+                        <div class="col-md-12">
+                        <span class="text-dark"><strong>{{'Annual Earnings: €'}}</strong> {{$salary}}</span>
+                        </div>
+                        <div class="col-md-12">
+                        <span class="text-dark"><strong>{{'Percentage of Expenses: €'}}</strong> {{$porcent}} %</span>
+                        </div>
+                        <div class="col-md-12">
+                        <span class="text-dark"><strong>{{'Annual Spending : €'}}</strong> {{$anual}}</span>
+                        </div>                                                
                     </div>
                 </div>  
                 <!--Aviso contas nao Pagas-->      
@@ -52,7 +61,7 @@
                         </div>
                             @endif
                     </div>
-                </div> 
+                </div>
             </div>
         <div class="col-sm-8">
             <div class="col-md-12">
@@ -80,6 +89,7 @@
                             <form  action="{{route('gestao.store')}}" method="POST">
                             @csrf                    
                             <input type="hidden" class="form-control" name="mes_id" value="{{$input_mes}}">
+                            <input type="hidden" class="form-control" name="ano" value="{{$ano}}">
                             <button type="submit" class="btn btn-primary mt-">Add Spent</button>
                             </form>                         
                         </div>
@@ -87,7 +97,8 @@
                         <div class="col-md-2">
                             <form  action="{{route('gestao.store')}}" method="POST">
                             @csrf
-                            <input type="hidden" class="form-control" name="mes_id" value="{{$input_mes}}">                                                   
+                            <input type="hidden" class="form-control" name="mes_id" value="{{$input_mes}}">
+                            <input type="hidden" class="form-control" name="ano" value="{{$ano}}">                                                   
                             <input type="text" class="form-control" placeholder="Salary" name="salario" >
                             </div> 
                             <div class="col-md-1">                        
@@ -115,7 +126,7 @@
                     <td><input type="text" class="form-control-plaintext" name="gastos" value={{$gestaogasto->gastos}}></td>
                     <td><input type="text" class="form-control-plaintext" name="valores" value={{$gestaogasto->valores}}></td>
                     <td><input type="checkbox" class="form-check-input" name="pago" value='1' {{$gestaogasto->pago  == '1' ? 'checked' : ''}}></td>                
-                    <td >
+                    <td>
                     <button class="btn btn-outline-light text-dark" type="submit">Edit</button> 
                     </form>
                     </td>

@@ -14,6 +14,7 @@ class GestaoGasto extends Model
         'gastos',
         'valores',
         'pago',
+        'ano',
         
     ];
     public function Mes(){

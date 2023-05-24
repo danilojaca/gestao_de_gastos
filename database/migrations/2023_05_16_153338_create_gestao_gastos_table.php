@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('mes_id');
             $table->string('gastos')->nullable();
             $table->string('valores')->nullable();
-            $table->string('pago')->nullable();            
+            $table->string('pago')->nullable();
+            $table->string('ano');            
             $table->timestamps();
             $table->foreign('mes_id')->references('id')->on('mes');
         });

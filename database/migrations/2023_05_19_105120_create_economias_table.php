@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('mes_id');
             $table->string('economia')->nullable();
+            $table->string('ano');
             $table->timestamps();
             $table->foreign('mes_id')->references('id')->on('mes');
         });

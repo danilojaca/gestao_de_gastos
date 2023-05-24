@@ -11,5 +11,6 @@ class Economia extends Model
     protected $fillable = [
         'mes_id',
         'economia',
+        'ano',
     ];
 }

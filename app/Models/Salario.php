@@ -11,6 +11,7 @@ class Salario extends Model
     protected $fillable = [
         'mes_id',
         'salario',
+        'ano',
         
         
     ];

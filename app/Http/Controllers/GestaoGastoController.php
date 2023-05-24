@@ -18,7 +18,9 @@ class GestaoGastoController extends Controller
         $restante = "0";
         $economia = "0";
         $input_mes= "";
-
+        $ano = date('Y');
+        
+        //Economias
         $economias = Economia::all(['economia'])->toArray();  
         $e = array_column($economias,'economia'); 
         $economia = array_sum($e); 
@@ -26,7 +28,10 @@ class GestaoGastoController extends Controller
         $meses = $request->input('mes');
         $mes = Mes::orderBy('id')->get();
 
-        $salario = Salario::where([['mes_id', $request->input('mes')]])->get();
+        $salario = Salario::where([
+            ['mes_id', $request->input('mes')],
+            ['ano', $ano]
+        ])->get();
         $y = $salario->toArray();
         $x = array_column($y,'salario');
         $salarios = array_sum($x);
@@ -42,7 +47,8 @@ class GestaoGastoController extends Controller
 
         $r = $gestaogastos->where([            
             ['pago','1'],
-            ['mes_id', $request->input('mes')]
+            ['mes_id', $request->input('mes')],
+            ['ano', $ano]
         ])->get();
         
         $s = $r->toArray();
@@ -61,22 +67,43 @@ class GestaoGastoController extends Controller
         }
 
         $avisos = $gestaogastos->where([
-            ['mes_id',$data]
+            ['mes_id',$data],
+            ['ano', $ano]
         ])->get();
 
         $d = $gestaogastos->where([            
             ['pago',NULL],
-            ['mes_id', $data]
-        ])->get();
-           
+            ['mes_id', $data],
+            ['ano', $ano]
+        ])->get();           
         
-            $n = $d->toArray();
-            $i = array_column($n,'valores');
-            $rest = array_sum($i);
+        $n = $d->toArray();
+        $i = array_column($n,'valores');
+        $rest = array_sum($i);
+
+
+        $f = $gestaogastos->where([            
+            ['pago','1'],            
+            ['ano', $ano]
+        ])->get();
+            
+        $g = $f->toArray();
+        $h = array_column($g,'valores');
+        $anual = array_sum($h); 
+        
+        $c = Salario::where([            
+            ['ano', $ano]
+        ])->get();
+        $l = $c->toArray();
+        $m = array_column($l,'salario');
+        $salary = array_sum($m);
+
+
+        $porcent = $anual * 100 / $salary;
 
     
 
-        return view('mes',['rest' => $rest,'avisos' => $avisos,'gastos' => $gastos,'mes' => $mes,'soma' => $soma,'salarios' => $salarios, 'restante' => $restante, 'economia' => $economia,'input_mes' => $input_mes,'gestaogastos' => $gestaogastos]);
+        return view('mes',['salary' => $salary,'porcent' => $porcent,'anual' => $anual,'ano' =>$ano,'rest' => $rest,'avisos' => $avisos,'gastos' => $gastos,'mes' => $mes,'soma' => $soma,'salarios' => $salarios, 'restante' => $restante, 'economia' => $economia,'input_mes' => $input_mes,'gestaogastos' => $gestaogastos]);
     }
 
     /**
